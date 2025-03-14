@@ -143,8 +143,6 @@ services:
   boltz-backend-nginx:
     hostname: boltz-nginx
     container_name: boltz-backend-nginx
-    environment:
-      CERTBOT_EMAIL: "${CERTBOT_EMAIL}"
     depends_on:
       boltz-backend:
         condition: service_healthy
@@ -152,11 +150,9 @@ services:
     image: ${NGINX_IMAGE}
     ports:
       - 9001:9001
-      - 80:80
-      - 443:443
+      - 3030:3030
     volumes:
       - nginx-data:/etc/nginx/conf.d
-      - nginx_secrets:/etc/letsencrypt
     healthcheck:
       test: ["CMD-SHELL", "curl http://localhost:9001/version"]
       timeout: 1s

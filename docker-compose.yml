@@ -150,6 +150,7 @@ services:
     image: ${NGINX_IMAGE}
     ports:
       - 9001:9001
+      - 3030:3030
     volumes:
       - nginx-data:/etc/nginx/conf.d
     healthcheck:
@@ -480,7 +481,16 @@ services:
     ports:
       - 5100:80
     profiles: ["default"]
-
+  tropykus-service:
+      build: 
+        context: ./tropykus-service
+        dockerfile: Dockerfile
+      container_name: tropykus-service
+      restart: always
+      expose:
+        - "3030"
+      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
   nbxplorer:
     container_name: boltz-nbxplorer
     image: ${NBXPLORER_IMAGE}

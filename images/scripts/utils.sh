@@ -240,7 +240,7 @@ wait-for-cln-sync(){
 
 # Deploy contracts
 deploy_contract() {
-  cast send --rpc-url http://anvil:8545 --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 --create $1
+  cast send --rpc-url https://rsktestnet-4.tropykus.com/rsk --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 --create $1
 }
 
 deploy_contracts() {

@@ -11,12 +11,12 @@ const swaggerDefinition = {
     },
     servers: [
         {
-            url: `http://localhost:${process.env.PORT}/`,
-            description: 'Local server',
-        },
-        {
             url: 'https://deepseek.tropykus.com/service/',
             description: 'Test server'
+        },
+        {
+            url: `http://localhost:${process.env.PORT}/`,
+            description: 'Local server',
         }
     ],
 };

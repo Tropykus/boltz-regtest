@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import swaggerUi from 'swagger-ui-express';
 import { swaggerSpec } from './swagger';
 import Joi from 'joi';
+import { validateInvoice } from './utils';
 dotenv.config();
 
 const app = express();
@@ -110,14 +111,18 @@ app.post('/addinvoice', checkSecretKey, (req: Request, res: Response) => {
  */
 app.post('/sendpayment', checkSecretKey, (req: Request, res: Response) => {
   const { invoice } = req.body;
-  const btcRegtest = /^(1|3)[A-HJ-NP-Za-km-z1-9]{25,34}$|^lnbcrt[a-z0-9]{8,87}$/;
   const schema = Joi.object({
-    invoice: Joi.string().regex(btcRegtest).required()
+    invoice: Joi.string().required()
   });
 
   const { error } = schema.validate({ invoice });
   if (error) {
     return res.status(400).json({error: error.details[0].message});
+  }
+
+  const decoded = validateInvoice(invoice);
+  if (!decoded) {
+    return res.status(400).json({ error: 'Invalid invoice' });
   }
   
   const command = `docker exec -i boltz-scripts bash -c "source /etc/profile.d/utils.sh && lncli-sim 1 payinvoice -f ${invoice} &>/dev/null & disown"`;

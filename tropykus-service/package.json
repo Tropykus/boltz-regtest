@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@hapi/boom": "^10.0.1",
+    "bolt11": "^1.4.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.1",
     "express": "^4.18.2",

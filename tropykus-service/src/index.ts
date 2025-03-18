@@ -66,7 +66,7 @@ app.post('/addinvoice', checkSecretKey, (req: Request, res: Response) => {
   }
 
   const satoshiWeiFactor = 100_000_000;
-  const satsAmount = amount * satoshiWeiFactor;
+  const satsAmount = Math.round(amount * satoshiWeiFactor);
   
   const command = `docker exec -i boltz-scripts bash -c "source /etc/profile.d/utils.sh && lncli-sim 1 addinvoice --amt ${satsAmount}"`;
   

@@ -1,4 +1,6 @@
 import swaggerJsdoc from 'swagger-jsdoc';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const swaggerDefinition = {
     openapi: '3.0.0',
@@ -9,8 +11,12 @@ const swaggerDefinition = {
     },
     servers: [
         {
-        url: `http://localhost:${process.env.PORT}/api/`,
-        description: 'Local server',
+            url: `http://localhost:${process.env.PORT}/`,
+            description: 'Local server',
+        },
+        {
+            url: 'https://deepseek.tropykus.com/service/',
+            description: 'Test server'
         }
     ],
 };

@@ -466,7 +466,7 @@ services:
     ports:
       - 4002:4002
       - 4003:4003
-    profiles: ["default"]
+    profiles: ["default", "esplora"]
 
   otterscan:
     hostname: otterscan

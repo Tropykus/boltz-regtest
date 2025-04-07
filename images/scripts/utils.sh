@@ -93,7 +93,19 @@ bitcoind-init() {
   bitcoin-cli-sim-server -rpcwallet=regtest -generate 1
 }
 
+# Needed for hold plugin to get the hooks first
+restart_offer_plugin() {
+    lightning-cli-sim $1 plugin stop /usr/libexec/c-lightning/plugins/offers
+    lightning-cli-sim $1 plugin start /usr/libexec/c-lightning/plugins/offers
+}
+
 regtest-start(){
+  restart_offer_plugin 1
+  restart_offer_plugin 2
+
+  # Hold invoice plugin on the clients node blocks fetching invoices for offers
+  lightning-cli-sim 1 plugin stop /root/hold
+
   regtest-init
   deploy_contracts
 }
@@ -240,7 +252,7 @@ wait-for-cln-sync(){
 
 # Deploy contracts
 deploy_contract() {
-  cast send --rpc-url http://anvil:8545 --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 --create $1
+  cast send --rpc-url https://rsktestnet-4.tropykus.com/rsk --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 --create $1
 }
 
 deploy_contracts() {
